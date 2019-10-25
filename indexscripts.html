@@ -65,7 +65,7 @@
 					button.innerHTML = "Light Mode";
 				}
 
-				$('td').each(function () { // Marks Age, Beast and Rape tags as red
+				$('td').each(function () { // Marks Age, Beast and Rape tags as red. If you don't want this feature, delete everything from the $
 					$(this).html(
 						$(this).html()
 							.replace(
@@ -81,7 +81,8 @@
 								'<span style="color:#ff4747;">$1</span>'
 							)
 					);
-				});
+				}); // Until here. If you want to mark other tags as red too, add more replaces after the last one and switch the word between the /b's for
+				    // the one you want
 			}
 
 			var LightTableFilter = (function (Arr) {
@@ -212,7 +213,9 @@
 			</div>
 		</div>
 	</div>
-
+	<footer>
+		Template developed by AngelMain
+	</footer>
 
 
 	<!-- For the love of god don't change those-->
