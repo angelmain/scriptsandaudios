@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>UserName's Audios</title> <!-- Change this to your username -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link id="pagestyle" rel="stylesheet" type="text/css" href="css/main.css">
+	<!--===============================================================================================-->
+
+	<!--===============================================================================================-->
+</head>
+
+	<!-- Do not change anything inside the <head></head> tag other than the title. If you do, things will probably explode -->
+
+<body>
+	<script> // Script that creates all of the functional part of the page. Do not modify anything inside this tag unless you really know what you're doing
+		(function (document) {
+			'index.html';
+
+			var mode = localStorage['mode']; // Gets current light/dark setting
+
+			function swapStyleSheet(button) { // Swaps light/dark mode on button click
+				if (mode == "dark") {
+					document.getElementById("pagestyle").setAttribute("href", "css/mainlight.css");
+					mode = "light";
+					localStorage['mode'] = 'light';
+					button.innerHTML = "Dark Mode";
+				}
+
+				else if (mode == "light") {
+					document.getElementById("pagestyle").setAttribute("href", "css/main.css");
+					mode = "dark";
+					localStorage['mode'] = 'dark';
+					button.innerHTML = "Light Mode";
+				}
+			}
+
+			function keepStyleSheet(button) { // Decides if the site will be on light or dark theme depending on the previous setting
+				if (mode == "light") {		  
+					document.getElementById("pagestyle").setAttribute("href", "css/mainlight.css");
+					mode = "light";
+					localStorage['mode'] = 'light';
+					button.innerHTML = "Dark Mode";
+				}
+
+				else if (mode == "dark") {
+					document.getElementById("pagestyle").setAttribute("href", "css/main.css");
+					mode = "dark";
+					localStorage['mode'] = 'dark';
+					button.innerHTML = "Light Mode";
+				}
+
+				$('td').each(function () { // Marks Age, Beast and Rape tags as red
+					$(this).html(
+						$(this).html()
+							.replace(
+								/(?<!-)(\[\brape\b\])(?!([^<]+)?>)(?!-)/ig,
+								'<span style="color:#ff4747;">$1</span>'
+							)
+							.replace(
+								/(?<!-)(\[\bage\b\])(?!([^<]+)?>)(?!-)/ig,
+								'<span style="color:#ff4747;">$1</span>'
+							)
+							.replace(
+								/(?<!-)(\[\bbeast\b\])(?!([^<]+)?>)(?!-)/ig,
+								'<span style="color:#ff4747;">$1</span>'
+							)
+					);
+				});
+			}
+
+			var LightTableFilter = (function (Arr) {
+
+				var _input;
+
+				function _onInputEvent(e) { // A lot of stuff to make the table filter work
+					_input = e.target;
+					var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+					Arr.forEach.call(tables, function (table) {
+						Arr.forEach.call(table.tBodies, function (tbody) {
+							Arr.forEach.call(tbody.rows, _filter);
+						});
+					});
+				}
+
+				function _filter(row) {
+					var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+					row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+				}
+
+				return {
+					init: function () {
+						var inputs = document.getElementsByClassName('light-table-filter');
+						Arr.forEach.call(inputs, function (input) {
+							input.oninput = _onInputEvent;
+						});
+					}
+				};
+			})(Array.prototype);
+
+			document.addEventListener('readystatechange', function () { // Adds table filter, event listeners and calls the initial page settings
+				if (document.readyState === 'complete') {
+					LightTableFilter.init();
+					var a = document.getElementById("modechange");
+					a.innerHTML = "Light Mode";
+					a.onclick = function () { swapStyleSheet(this); };
+
+					if (mode != "dark" && mode != "light") {
+						mode = "dark";
+						localStorage['mode'] = 'dark';
+					}
+
+					keepStyleSheet(a);
+
+
+				}
+			});
+
+		})(document);
+
+	</script>
+	<header><div id="topbuttons"><button name="modechange" id="modechange"></button><br>
+		<a href=indexscripts.html><button name="scriptsoraudios" id="scriptsoraudios">Scripts</button></a></div></header>
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<h1>UserName's Audios</h1> <!-- Change this to your username -->
+
+				<!--Filter. Shows only the rows where the term inside "value" appears in the title, tags, synopsis or category.
+				The term inside "value" is the term that will be searched. The term inside >< is simply cosmetic and is what will
+				be shown to the user for that option. Feel free to add or remove filters and option groups as much as you want.-->
+
+				<!--Do not change or remove the first two options, and if you script has no fills, use the term "None yet" inside the fills
+				column for that row-->
+
+				<select class="light-table-filter" data-table="order-table" placeholder="Filter">
+					<option value="">Everything</option>
+					<option value="None yet">Unfilled Only</option>
+					<optgroup label="By Category">
+						<option value="Category1SearchTerm">Category 1</option>
+						<option value="Category2SearchTerm">Category 2</option>
+						<option value="Category3SearchTerm">Category 3</option>
+					</optgroup>
+					<optgroup label="By Series">
+						<option value="Series1SearchTerm">Series 1</option>
+						<option value="Series2SearchTerm">Series 2</option>
+					</optgroup>
+					<optgroup label="By Common Tags">
+						<option value="Tag1SearchTerm">Tag 1</option>
+						<option value="Tag2SearchTerm">Tag 2</option>
+					</optgroup>
+				</select>
+
+				<div class="table100">
+					<table class="order-table">
+						<thead>
+							<tr class="table100-head">
+								<th class="column1">Name</th>
+								<th class="column2">Synopsis</th>
+								<th class="column3">Tags</th> <!-- Yes, column 4 is missing. This is just so I don't have to change the CSS. I'm lazy -->
+								<th class="column5">Categories</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="column1"><a href="CompleteUrlOfYourThing.com">Name of your thing</a></td>
+								<td class="column2">
+									<p>Synopsis of your thing</p>
+								</td>
+								<td class="column3">
+									<p>[Tags][Of][Your][Thing]</p>
+								</td>
+								<td class="column5">Category, Another Category</td>
+							</tr>
+							<tr>
+								<td class="column1"><a href="CompleteUrlOfYourThing.com">Name of your thing</a></td>
+								<td class="column2">
+									<p>Synopsis of your thing</p>
+								</td>
+								<td class="column3">
+									<p>[Tags][Of][Your][Thing]</p>
+								</td>
+								<td class="column5">Category, Another Category</td>
+							</tr>
+
+							<!-- To add more content to the table, copy and <tr></tr> tag and everything inside it, paste it after the next one and fill it with the new data -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- For the love of god don't change those-->
+
+	<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
+
+</html>
